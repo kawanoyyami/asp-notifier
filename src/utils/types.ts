@@ -10,3 +10,7 @@ export interface AvailableDate {
 export interface AvailableTime {
   time: string;
 } 
+
+export interface RunAppOptions {
+  notifyIfEmpty?: boolean;
+}

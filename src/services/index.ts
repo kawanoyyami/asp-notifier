@@ -1,9 +1,9 @@
 import { Services, Branches, BranchKey } from '../utils/configs';
 import { getAvailableDates, getAvailableTimes, sleep } from './api';
-import { AvailableDate, AvailableTime } from '../utils/types';
+import { AvailableDate, AvailableTime, RunAppOptions } from '../utils/types';
 import { sendTelegramNotification } from './telegram';
 
-export async function runApp(branchKey: BranchKey) {
+export async function runApp(branchKey: BranchKey, options: RunAppOptions = {}) {
   const { id: branchId, displayName: branchName } = Branches[branchKey];
   let summaryMsg = `*Available appointments at ASP - ${branchName}*\n`;
   let found = false;
@@ -24,11 +24,11 @@ export async function runApp(branchKey: BranchKey) {
         }
       }
     }
-    await sleep(3000);
+    await sleep(5000);
   }
   if (found) {
     await sendTelegramNotification(summaryMsg.trim());
-  } else {
+  } else if (options.notifyIfEmpty !== false) {
     await sendTelegramNotification(`No appointments available for ${branchName}.`);
   }
 } 
