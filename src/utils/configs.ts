@@ -1,15 +1,20 @@
 import { Service } from './types';
 
-export enum BranchName {
-  Chisinau_Riscani = 'Chisinau_Riscani',
-  Chisinau_Buiucani = 'Chisinau_Buiucani',
-  Chisinau_Botanica = 'Chisinau_Botanica',
-}
+export type BranchKey = 'Chisinau_Riscani' | 'Chisinau_Buiucani' | 'Chisinau_Botanica';
 
-export const BranchIds: Record<BranchName, string> = {
-  [BranchName.Chisinau_Riscani]: '9c93477f3ac5814a4c29f35b35089992704c8b0fb90ac3da9651f39515265370',
-  [BranchName.Chisinau_Buiucani]: 'cf02955299edc7a0e12a09d04cc715c10abf01655e66849c45b357cbd6f11d1c',
-  [BranchName.Chisinau_Botanica]: '01cec8bf73e969459fbafe6c243618c9a0face8de1af6b02c50cff8eea1b0d5c',
+export const Branches: Record<BranchKey, { id: string; displayName: string }> = {
+  Chisinau_Riscani: {
+    id: '9c93477f3ac5814a4c29f35b35089992704c8b0fb90ac3da9651f39515265370',
+    displayName: 'Chișinău Rîșcani',
+  },
+  Chisinau_Buiucani: {
+    id: 'cf02955299edc7a0e12a09d04cc715c10abf01655e66849c45b357cbd6f11d1c',
+    displayName: 'Chișinău Buiucani',
+  },
+  Chisinau_Botanica: {
+    id: '01cec8bf73e969459fbafe6c243618c9a0face8de1af6b02c50cff8eea1b0d5c',
+    displayName: 'Chișinău Botanica',
+  },
 };
 
 export const Services: Service[] = [

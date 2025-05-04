@@ -1,29 +1,34 @@
-import { Services } from '../utils/configs';
+import { Services, Branches, BranchKey } from '../utils/configs';
 import { getAvailableDates, getAvailableTimes, sleep } from './api';
 import { AvailableDate, AvailableTime } from '../utils/types';
+import { sendTelegramNotification } from './telegram';
 
-export async function runApp(branchId: string) {
+export async function runApp(branchKey: BranchKey) {
+  const { id: branchId, displayName: branchName } = Branches[branchKey];
+  let summaryMsg = `*Available appointments at ASP - ${branchName}*\n`;
+  let found = false;
   for (const service of Services) {
     const dates = await getAvailableDates(branchId, service.id);
     if (Array.isArray(dates) && dates.length > 0) {
-      console.log(`\n[${service.name}] Available dates:`);
+      found = true;
+      summaryMsg += `\n*${service.name}*\n`;
       const firstTwoDates = dates.slice(0, 2);
       for (const day of firstTwoDates) {
         const date = (day as AvailableDate).date || (day as any).date || day;
-        console.log(`\t- ${date}`);
         const times = await getAvailableTimes(branchId, service.id, date);
         if (Array.isArray(times) && times.length > 0) {
-          console.log(`\tTime for ${date}:`);
-          times.forEach(time => {
-            console.log(`\t\t* ${(time as AvailableTime).time || time}`);
-          });
+          const hourList = times.map(time => (time as AvailableTime).time || time).join(', ');
+          summaryMsg += `- ${date}: ${hourList}\n`;
         } else {
-          console.log(`\tNo time for ${date}.`);
+          summaryMsg += `- ${date}: no times available\n`;
         }
       }
-    } else {
-      console.log(`\n[${service.name}] No data available.`);
     }
     await sleep(3000);
+  }
+  if (found) {
+    await sendTelegramNotification(summaryMsg.trim());
+  } else {
+    await sendTelegramNotification(`No appointments available for ${branchName}.`);
   }
 } 

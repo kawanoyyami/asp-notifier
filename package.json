@@ -8,10 +8,12 @@
     "start": "ts-node src/app.ts"
   },
   "dependencies": {
+    "@types/node-fetch": "^2.6.12",
     "axios": "^1.6.7",
     "cheerio": "^1.0.0-rc.12",
     "dotenv": "^16.4.1",
     "node-cron": "^3.0.3",
+    "node-fetch": "^2.7.0",
     "pushbullet": "^2.4.0"
   },
   "devDependencies": {
