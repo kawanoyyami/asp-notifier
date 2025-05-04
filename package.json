@@ -5,7 +5,17 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc",
-    "start": "ts-node src/app.ts"
+    "start": "ts-node src/app.ts",
+    "pm2:start": "RANDOM_MINUTE=$(( $RANDOM % 60 )) && pm2 start src/app.ts --interpreter npx --interpreter-args \"ts-node\" --name asp-notifier --cron \"$RANDOM_MINUTE * * * *\"",
+    "pm2:start-hourly": "RANDOM_MINUTE=$(( $RANDOM % 60 )) && pm2 start src/app.ts --interpreter npx --interpreter-args \"ts-node\" --name asp-notifier --cron \"$RANDOM_MINUTE * * * *\"",
+    "pm2:check-hourly": "bash -c 'MINUTE=$(( RANDOM % 60 )); pm2 start src/app.ts --interpreter npx --interpreter-args \"ts-node\" --name asp-notifier --cron \"$MINUTE * * * *\" --no-autorestart'",
+    "pm2:start-debug": "pm2 start src/app.ts --interpreter npx --interpreter-args \"ts-node\" --name asp-notifier --cron \"*/15 * * * *\"",
+    "pm2:stop": "pm2 stop asp-notifier",
+    "pm2:restart": "pm2 restart asp-notifier",
+    "pm2:logs": "pm2 logs asp-notifier",
+    "pm2:status": "pm2 status asp-notifier",
+    "pm2:clearlogs": "pm2 flush && rm -rf ~/.pm2/logs/asp-notifier*",
+    "pm2:reset-lock": "rm -f .asp-lock"
   },
   "dependencies": {
     "@types/node-fetch": "^2.6.12",

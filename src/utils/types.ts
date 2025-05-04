@@ -9,8 +9,15 @@ export interface AvailableDate {
 
 export interface AvailableTime {
   time: string;
-} 
+}
 
 export interface RunAppOptions {
   notifyIfEmpty?: boolean;
 }
+
+export class ASPConnectionRefusedError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = 'ASPConnectionRefusedError';
+  }
+} 
