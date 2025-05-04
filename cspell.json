@@ -1,0 +1,31 @@
+{
+  "version": "0.2",
+  "language": "en,ro",
+  "words": [
+    "Riscani",
+    "Buiucani"
+  ],
+  "ignorePaths": [
+    "**/node_modules/**",
+    "**/dist/**",
+    "**/build/**",
+    "**/.git/**",
+    "**/package-lock.json",
+    "**/yarn.lock"
+  ],
+  "dictionaries": [
+    "typescript",
+    "node",
+    "npm",
+    "en_US",
+    "ro_RO"
+  ],
+  "ignoreWords": [
+    "tsconfig",
+    "tsx",
+    "jsx"
+  ],
+  "import": [
+    "@cspell/dict-ro-ro/cspell-ext.json"
+  ]
+} 
